@@ -6,6 +6,7 @@ import (
 
 	"github.com/martinkent2003/muxCrashCourse/entity"
 	"cloud.google.com/go/firestore"
+	"google.golang.org/api/iterator"
 )
 
 const (
@@ -55,9 +56,12 @@ func (*repo) FindAll() ([]entity.Post, error) {
 	}
 	defer client.Close()
 	var posts []entity.Post
-	iterator := client.Collection(collectionName).Documents(ctx)
+	itr := client.Collection(collectionName).Documents(ctx)
 	for {
-		doc, err := iterator.Next()
+		doc, err := itr.Next()
+		if err == iterator.Done {
+			break
+		}
 		if err != nil {
 			log.Fatalf("Failed to iterate the posts: %v", err)
 			return nil, err
