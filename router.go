@@ -34,7 +34,7 @@ func addPost(resp http.ResponseWriter, req *http.Request) {
 		resp.Write([]byte(`{"error": "Error unmarshalling the posts array"}`))
 		return
 	}
-	post.ID = rand.Int()
+	post.ID = rand.Int63()
 	repo.Save(&post)
 	resp.WriteHeader(http.StatusOK)
 	json.NewEncoder(resp).Encode(post)
