@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/martinkent2003/muxCrashCourse/entity"
+	"github.com/martinkent2003/Golang-API/entity"
 	"cloud.google.com/go/firestore"
 	"google.golang.org/api/iterator"
 )
@@ -67,7 +67,7 @@ func (*groupRepo) FindAll() ([]entity.Group, error) {
 		}
 		group := entity.Group{
 			GroupID:    doc.Data()["GroupID"].(string),
-			Users: doc.Data()["Users"].([]string),
+			Users: 		doc.Data()["Users"].(string),
 		}
 		groups = append(groups, group)
 	}
